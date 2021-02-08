@@ -29,7 +29,7 @@ const TextField = ({
       onChange={handleChange}
       variant={variant}
       InputLabelProps={{
-        shrink: shrink && true,
+        shrink: shrink,
       }}
       {...restProps}
     />
