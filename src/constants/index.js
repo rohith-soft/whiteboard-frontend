@@ -16,6 +16,12 @@ export const headCells = [
   { id: "description", numeric: false, label: "Description" },
 ];
 
+export const ERROR_MESSAGES = {
+  EMPTY_FIELD: "Field cannot be empty!",
+  PHONE_DIGITS: "Phone number should have 10 digits!",
+  STATE_DIGITS: "State should have two letters!",
+};
+
 export const EVENT_FORM = {
   LABELS: {
     DESCRIPTION: "Description",

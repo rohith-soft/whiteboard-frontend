@@ -10,6 +10,7 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import { EVENT_FORM, STATUS } from "../../../constants";
+import { isEmpty } from "../../../utils/helper";
 
 const EventForm = ({
   editEvent,
@@ -28,6 +29,7 @@ const EventForm = ({
   contactName,
   contactPhone,
   note,
+  fieldErrors,
   existingNote,
   handleFieldChange,
   handleDateChange,
@@ -73,6 +75,8 @@ const EventForm = ({
             label={TASK}
             variant="outlined"
             value={task}
+            error={!isEmpty(fieldErrors[TASK])}
+            helperText={fieldErrors[TASK]}
             options={options}
             handleSelectChange={handleTaskChange}
           />
@@ -83,6 +87,8 @@ const EventForm = ({
             label={DESCRIPTION}
             name={DESCRIPTION}
             value={description}
+            error={!isEmpty(fieldErrors[DESCRIPTION])}
+            helperText={fieldErrors[DESCRIPTION]}
             shrink
             handleTextChange={handleFieldChange}
             multiline
@@ -96,6 +102,8 @@ const EventForm = ({
               <Grid item>
                 <KeyboardDatePicker
                   inputVariant="outlined"
+                  error={!isEmpty(fieldErrors[DATE])}
+                  helperText={fieldErrors[DATE]}
                   margin="normal"
                   id="date-picker-dialog"
                   label={DATE}
@@ -114,6 +122,8 @@ const EventForm = ({
                   inputVariant="outlined"
                   margin="normal"
                   id="time-picker"
+                  error={!isEmpty(fieldErrors[DATE])}
+                  helperText={fieldErrors[DATE]}
                   style={{ width: "360px" }}
                   label={TIME}
                   value={date}
@@ -132,6 +142,8 @@ const EventForm = ({
             label={DURATION}
             type="number"
             shrink
+            error={!isEmpty(fieldErrors[DURATION])}
+            helperText={fieldErrors[DURATION]}
             name={DURATION}
             value={duration}
             handleTextChange={handleFieldChange}
@@ -156,6 +168,8 @@ const EventForm = ({
                   label={ADDRESS}
                   name={ADDRESS}
                   shrink
+                  error={!isEmpty(fieldErrors[ADDRESS])}
+                  helperText={fieldErrors[ADDRESS]}
                   value={address}
                   handleTextChange={handleFieldChange}
                 />
@@ -165,6 +179,8 @@ const EventForm = ({
                   variant="outlined"
                   label={LATITUDE}
                   name={LATITUDE}
+                  error={!isEmpty(fieldErrors[LATITUDE])}
+                  helperText={fieldErrors[LATITUDE]}
                   shrink
                   type="number"
                   value={latitude}
@@ -176,6 +192,8 @@ const EventForm = ({
                   variant="outlined"
                   label={LONGITUDE}
                   name={LONGITUDE}
+                  error={!isEmpty(fieldErrors[LONGITUDE])}
+                  helperText={fieldErrors[LONGITUDE]}
                   shrink
                   type="number"
                   value={longitude}
@@ -191,6 +209,8 @@ const EventForm = ({
                   variant="outlined"
                   label={CITY}
                   name={CITY}
+                  error={!isEmpty(fieldErrors[CITY])}
+                  helperText={fieldErrors[CITY]}
                   shrink
                   value={city}
                   handleTextChange={handleFieldChange}
@@ -201,6 +221,8 @@ const EventForm = ({
                   variant="outlined"
                   label={STATE}
                   name={STATE}
+                  error={!isEmpty(fieldErrors[STATE])}
+                  helperText={fieldErrors[STATE]}
                   shrink
                   value={state}
                   handleTextChange={handleFieldChange}
@@ -216,6 +238,8 @@ const EventForm = ({
                 variant="outlined"
                 label={CONTACT_NAME}
                 name={CONTACT_NAME}
+                error={!isEmpty(fieldErrors[CONTACT_NAME])}
+                helperText={fieldErrors[CONTACT_NAME]}
                 shrink
                 value={contactName}
                 handleTextChange={handleFieldChange}
@@ -226,6 +250,8 @@ const EventForm = ({
                 variant="outlined"
                 label={CONTACT_PHONE}
                 name={CONTACT_PHONE}
+                error={!isEmpty(fieldErrors[CONTACT_PHONE])}
+                helperText={fieldErrors[CONTACT_PHONE]}
                 value={contactPhone}
                 shrink
                 handleTextChange={handleFieldChange}

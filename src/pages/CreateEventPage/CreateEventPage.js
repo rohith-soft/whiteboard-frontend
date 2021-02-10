@@ -39,8 +39,13 @@ const CreateEventPage = () => {
       clli: formValues[CLLI],
       site_type: formValues[SITE_TYPE],
     };
-    axios.post(urls.eventBase, payload);
-    // TODO: Handle redirection after edit and create
+    try {
+      axios.post(urls.eventBase, payload);
+    } catch {
+      // TODO: Add a modal or something to notify user regarding the issue here
+    } finally {
+      window.location.reload();
+    }
   };
 
   return (

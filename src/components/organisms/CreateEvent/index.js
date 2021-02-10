@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { EVENT_FORM, TASK_LIST } from "../../../constants";
+import { ERROR_MESSAGES, EVENT_FORM, TASK_LIST } from "../../../constants";
 import EventForm from "../../molecules/EventForm";
 import Button from "../../atoms/Button";
+import {
+  isEmpty,
+  isPhoneNumberValid,
+  isStateValid,
+} from "../../../utils/helper";
 
 const CreateEvent = ({ handleOnCreate }) => {
   const { LABELS } = EVENT_FORM;
@@ -18,6 +23,8 @@ const CreateEvent = ({ handleOnCreate }) => {
     CONTACT_PHONE,
     NOTE,
     CREATE_BUTTON,
+    TASK,
+    DATE,
   } = LABELS;
 
   const [formValues, setFormValues] = useState({
@@ -35,11 +42,28 @@ const CreateEvent = ({ handleOnCreate }) => {
   });
   const [task, setTask] = useState("");
   const [date, setDate] = useState(new Date());
+  const [fieldErrors, setFieldErrors] = useState({
+    [DESCRIPTION]: "",
+    [DURATION]: "",
+    [ADDRESS]: "",
+    [CITY]: "",
+    [STATE]: "",
+    [CONTACT_NAME]: "",
+    [CONTACT_PHONE]: "",
+    [LATITUDE]: "",
+    [LONGITUDE]: "",
+    [TASK]: "",
+    [DATE]: "",
+  });
 
   const handleFieldChange = (fieldName, value) => {
     setFormValues((prevState) => ({
       ...prevState,
       [fieldName]: value,
+    }));
+    setFieldErrors((prevState) => ({
+      ...prevState,
+      [fieldName]: "",
     }));
   };
 
@@ -60,6 +84,66 @@ const CreateEvent = ({ handleOnCreate }) => {
     setTask(value);
   };
 
+  const validateAndCreate = () => {
+    let isValid = true;
+    if (isEmpty(task)) {
+      isValid = false;
+      setFieldErrors((prevState) => ({
+        ...prevState,
+        [TASK]: ERROR_MESSAGES.EMPTY_FIELD,
+      }));
+    }
+    if (isEmpty(date)) {
+      isValid = false;
+      setFieldErrors((prevState) => ({
+        ...prevState,
+        [DATE]: ERROR_MESSAGES.EMPTY_FIELD,
+      }));
+    }
+    const fields = [
+      DESCRIPTION,
+      DURATION,
+      ADDRESS,
+      CITY,
+      LATITUDE,
+      LONGITUDE,
+      STATE,
+      CONTACT_NAME,
+      CONTACT_PHONE,
+    ];
+    fields.forEach((field) => {
+      if (isEmpty(formValues[field])) {
+        isValid = false;
+        setFieldErrors((prevState) => ({
+          ...prevState,
+          [field]: ERROR_MESSAGES.EMPTY_FIELD,
+        }));
+      } else {
+        setFieldErrors((prevState) => ({
+          ...prevState,
+          [field]: "",
+        }));
+      }
+    });
+    if (!isPhoneNumberValid(formValues[CONTACT_PHONE])) {
+      isValid = false;
+      setFieldErrors((prevState) => ({
+        ...prevState,
+        [CONTACT_PHONE]: ERROR_MESSAGES.PHONE_DIGITS,
+      }));
+    }
+    if (!isStateValid(formValues[STATE])) {
+      isValid = false;
+      setFieldErrors((prevState) => ({
+        ...prevState,
+        [STATE]: ERROR_MESSAGES.STATE_DIGITS,
+      }));
+    }
+    if (isValid) {
+      handleOnCreate(formValues, date, task);
+    }
+  };
+
   return (
     <>
       <EventForm
@@ -75,6 +159,7 @@ const CreateEvent = ({ handleOnCreate }) => {
         task={task}
         latitude={formValues[LATITUDE]}
         longitude={formValues[LONGITUDE]}
+        fieldErrors={fieldErrors}
         date={date}
         options={updatedTaskList}
         handleFieldChange={handleFieldChange}
@@ -87,7 +172,7 @@ const CreateEvent = ({ handleOnCreate }) => {
           color="primary"
           variant="contained"
           size="medium"
-          onClick={() => handleOnCreate(formValues, date, task)}
+          onClick={validateAndCreate}
         />
       </div>
     </>

@@ -1,6 +1,7 @@
 import React from "react";
 import {
   FormControl,
+  FormHelperText,
   InputLabel,
   makeStyles,
   MenuItem,
@@ -12,7 +13,15 @@ const useStyles = makeStyles(() => ({
     minWidth: 360,
   },
 }));
-const Dropdown = ({ options, label, value, handleSelectChange, variant }) => {
+const Dropdown = ({
+  options,
+  label,
+  value,
+  handleSelectChange,
+  variant,
+  error,
+  helperText,
+}) => {
   const classes = useStyles();
 
   const handleChange = (event) => {
@@ -21,7 +30,11 @@ const Dropdown = ({ options, label, value, handleSelectChange, variant }) => {
 
   return (
     <>
-      <FormControl className={classes.formControl} variant={variant}>
+      <FormControl
+        className={classes.formControl}
+        variant={variant}
+        error={error}
+      >
         <InputLabel>{label}</InputLabel>
         <Select value={value} onChange={handleChange}>
           {options &&
@@ -31,6 +44,7 @@ const Dropdown = ({ options, label, value, handleSelectChange, variant }) => {
               </MenuItem>
             ))}
         </Select>
+        <FormHelperText>{helperText}</FormHelperText>
       </FormControl>
     </>
   );

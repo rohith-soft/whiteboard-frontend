@@ -39,6 +39,7 @@ const TextField = ({
       defaultValue={defaultValue}
       rows={rows}
       rowsMax={rowsMax}
+      autoComplete="off"
       onChange={onChange}
       variant={variant}
       InputLabelProps={{
