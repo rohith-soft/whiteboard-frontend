@@ -2,9 +2,14 @@ import { Paper, Typography } from "@material-ui/core";
 import axios from "axios";
 import React from "react";
 import CreateEvent from "../../components/organisms/CreateEvent";
+import SideNavigationBar from "../../components/organisms/SideNavigationBar/SideNavigationBar";
+import TopNavigationBar from "../../components/organisms/TopNavigationBar/TopNavigationBar";
+import TableScreenTemplate from "../../components/templates/TableScreenTemplate/TableScreenTemplate";
 import { EVENT_FORM, urls } from "../../constants";
+import { useHistory } from "react-router-dom";
 
 const CreateEventPage = () => {
+  const history = useHistory();
   const { LABELS } = EVENT_FORM;
   const {
     DESCRIPTION,
@@ -44,19 +49,34 @@ const CreateEventPage = () => {
     } catch {
       // TODO: Add a modal or something to notify user regarding the issue here
     } finally {
-      window.location.reload();
+      history.push("/");
+    }
+  };
+
+  const handleTabChange = (event, value) => {
+    if (value === "List") {
+      history.push("/");
+    }
+    if (value === "Add") {
+      history.push("/create/event/");
     }
   };
 
   return (
-    <Paper style={{ backgroundColor: "#edf5f6" }}>
-      <div style={{ padding: 24 }}>
-        <Typography variant="h5" style={{ marginBottom: 16 }}>
-          Create Whiteboard Event
-        </Typography>
-        <CreateEvent handleOnCreate={handleOnCreate} />
-      </div>
-    </Paper>
+    <TableScreenTemplate
+      header={<TopNavigationBar />}
+      sidebar={<SideNavigationBar handleTabChange={handleTabChange} />}
+      body={
+        <Paper style={{ backgroundColor: "#edf5f6" }}>
+          <div style={{ padding: 24 }}>
+            <Typography variant="h5" style={{ marginBottom: 16 }}>
+              Create Whiteboard Event
+            </Typography>
+            <CreateEvent handleOnCreate={handleOnCreate} />
+          </div>
+        </Paper>
+      }
+    />
   );
 };
 
