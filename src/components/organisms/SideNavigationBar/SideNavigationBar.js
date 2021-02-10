@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 
 const SideNavigationBar = (props) => {
   const classes = useStyles();
-  const { active } = props;
+  const { activeTab } = props;
   return (
     <div style={{ height: "792px", width: "76px" }}>
       <Grid container justify="space-around">
@@ -41,7 +41,6 @@ const SideNavigationBar = (props) => {
             container
             justify="space-between"
             style={{ marginBottom: "125px" }}
-            // style={{ height: "325px", marginBottom: "125px" }}
           >
             <Grid item>
               <Typography variant="h2" style={{ margin: "12px 0 10px 20px" }}>
@@ -50,7 +49,7 @@ const SideNavigationBar = (props) => {
             </Grid>
             <Grid item className={classes.root}>
               <IconButton
-                className={active == "List" ? classes.selected : classes.root}
+                className={activeTab == "List" ? classes.selected : classes.root}
                 onClick={(e) => props.handleTabChange(e, "List")}
               >
                 <SideBarIcons icon={<ViewListIcon />} />
@@ -58,7 +57,7 @@ const SideNavigationBar = (props) => {
             </Grid>
             <Grid item className={classes.root}>
               <IconButton
-                className={active == "Add" ? classes.selected : classes.root}
+                className={activeTab == "Add" ? classes.selected : classes.root}
                 onClick={(e) => props.handleTabChange(e, "Add")}
               >
                 <SideBarIcons icon={<AddIcon />} />

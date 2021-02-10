@@ -38,8 +38,8 @@ const TopNavigationBar = () => {
                 </IconButton>
               </Grid> */}
               <Grid item>
-                <Typography variant="h3" style={{ flex: 1 }}>
-                  WindStream Change Management
+                <Typography variant="caption" style={{ flex: 1 }}>
+                  Wind Stream Change Management
                 </Typography>
               </Grid>
             </Grid>
