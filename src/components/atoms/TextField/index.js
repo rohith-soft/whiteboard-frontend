@@ -1,24 +1,37 @@
 import React from "react";
-import { TextField as MuiTextField } from "@material-ui/core";
+import { makeStyles, TextField as MuiTextField } from "@material-ui/core";
 import PropTypes from "prop-types";
 
+const useStyles = makeStyles(() => ({
+  root: {
+    minWidth: 360,
+  },
+}));
 const TextField = ({
   label,
+  name,
   value,
+  type,
   multiline,
   rows,
   rowsMax,
   defaultValue,
   placeholder,
-  handleChange,
+  handleTextChange,
   variant,
   margin,
   shrink,
   ...restProps
 }) => {
+  const classes = useStyles();
+  const onChange = (event) => {
+    handleTextChange(name, event.target.value);
+  };
+
   return (
     <MuiTextField
       margin={margin}
+      name={name}
       label={label}
       value={value}
       multiline={multiline}
@@ -26,11 +39,13 @@ const TextField = ({
       defaultValue={defaultValue}
       rows={rows}
       rowsMax={rowsMax}
-      onChange={handleChange}
+      onChange={onChange}
       variant={variant}
       InputLabelProps={{
         shrink: shrink,
       }}
+      type={type}
+      className={classes.root}
       {...restProps}
     />
   );

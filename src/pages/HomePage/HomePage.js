@@ -4,7 +4,8 @@ import TopNavigationBar from "../../components/organisms/TopNavigationBar/TopNav
 import SideNavigationBar from "../../components/organisms/SideNavigationBar/SideNavigationBar";
 import { headCells } from "../../constants";
 import EnhancedTable from "../../components/organisms/WhiteBoardTable/EnhancedTable";
- 
+import CreateEvent from "../CreateEventPage/CreateEventPage";
+
 export default function HomePage(props) {
   const [active, setActive] = useState("List");
   const handleTabChange = (event, value) => {
@@ -17,7 +18,12 @@ export default function HomePage(props) {
     <div>
       <TableScreenTemplate
         header={<TopNavigationBar />}
-        sidebar={<SideNavigationBar handleTabChange={handleTabChange} active={active} />}
+        sidebar={
+          <SideNavigationBar
+            handleTabChange={handleTabChange}
+            active={active}
+          />
+        }
         body={
           active === "List" ? (
             <EnhancedTable
@@ -28,7 +34,7 @@ export default function HomePage(props) {
               rowsPerPage={5}
             />
           ) : (
-            <div> Add Form </div>
+            <CreateEvent />
           )
         }
       />
