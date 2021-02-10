@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import axios from "axios";
 import React from "react";
 import CreateEvent from "../../components/organisms/CreateEvent";
@@ -49,12 +49,14 @@ const CreateEventPage = () => {
   };
 
   return (
-    <div style={{ padding: 24 }}>
-      <Typography variant="h5" style={{ marginBottom: 16 }}>
-        Create Whiteboard Event
-      </Typography>
-      <CreateEvent handleOnCreate={handleOnCreate} />
-    </div>
+    <Paper style={{ backgroundColor: "#edf5f6" }}>
+      <div style={{ padding: 24 }}>
+        <Typography variant="h5" style={{ marginBottom: 16 }}>
+          Create Whiteboard Event
+        </Typography>
+        <CreateEvent handleOnCreate={handleOnCreate} />
+      </div>
+    </Paper>
   );
 };
 

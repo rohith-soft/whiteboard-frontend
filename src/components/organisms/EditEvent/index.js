@@ -34,20 +34,20 @@ const EditEvent = ({ eventDetails, handleOnEdit }) => {
   const [formValues, setFormValues] = useState({
     [WHITEBOARD_ID]: eventDetails?.id,
     [DESCRIPTION]: eventDetails?.description,
-    [DURATION]: eventDetails?.durationMinutes,
-    [CLLI]: eventDetails?.clli,
-    [ADDRESS]: eventDetails?.locationAddress,
+    [DURATION]: eventDetails?.duration_minutes,
+    // [CLLI]: eventDetails?.clli,
+    [ADDRESS]: eventDetails?.location_address,
     [CITY]: eventDetails?.city,
     [STATE]: eventDetails?.state,
-    [CONTACT_NAME]: eventDetails?.contactName,
-    [CONTACT_PHONE]: eventDetails?.contactNumber,
+    [CONTACT_NAME]: eventDetails?.contact_name,
+    [CONTACT_PHONE]: eventDetails?.contact_number,
     [NOTE]: "",
-    [LATITUDE]: eventDetails?.locationLatitude,
-    [LONGITUDE]: eventDetails?.locationLongitude,
+    [LATITUDE]: eventDetails?.location_latitude,
+    [LONGITUDE]: eventDetails?.location_longitude,
     [STATUS_LABEL]: eventDetails?.status,
     [EXISTING_NOTES]: eventDetails?.notes,
   });
-  const [task, setTask] = useState(eventDetails?.taskId);
+  const [task, setTask] = useState(eventDetails?.task_id);
   const [date, setDate] = useState(new Date(eventDetails?.scheduled));
   const [fieldErrors, setFieldErrors] = useState({
     [DESCRIPTION]: "",
@@ -97,14 +97,6 @@ const EditEvent = ({ eventDetails, handleOnEdit }) => {
       ...prevState,
       [STATUS_LABEL]: value,
     }));
-  };
-
-  const isDisabled = () => {
-    return (
-      formValues[STATUS_LABEL] === "COMPLETE" ||
-      formValues[STATUS_LABEL] === "FAILED" ||
-      formValues[STATUS_LABEL] === "COMPLETED"
-    );
   };
 
   const validateAndEdit = () => {
@@ -186,7 +178,11 @@ const EditEvent = ({ eventDetails, handleOnEdit }) => {
         note={formValues[NOTE]}
         fieldErrors={fieldErrors}
         task={task}
-        disabled={isDisabled}
+        disabled={
+          eventDetails?.status === "COMPLETE" ||
+          eventDetails?.status === "FAILED" ||
+          eventDetails?.status === "CANCELLED"
+        }
         latitude={formValues[LATITUDE]}
         longitude={formValues[LONGITUDE]}
         status={formValues[STATUS_LABEL]}
@@ -202,7 +198,11 @@ const EditEvent = ({ eventDetails, handleOnEdit }) => {
         <Button
           label={EDIT_BUTTON}
           color="primary"
-          disabled={isDisabled}
+          disabled={
+            eventDetails?.status === "COMPLETE" ||
+            eventDetails?.status === "FAILED" ||
+            eventDetails?.status === "CANCELLED"
+          }
           variant="contained"
           size="medium"
           onClick={validateAndEdit}

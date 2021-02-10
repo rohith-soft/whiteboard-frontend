@@ -45,6 +45,7 @@ const TextField = ({
       InputLabelProps={{
         shrink: shrink,
       }}
+      style={{ backgroundColor: "white" }}
       type={type}
       className={classes.root}
       {...restProps}

@@ -117,7 +117,7 @@ const EventForm = ({
                   format="MM/dd/yyyy"
                   value={date}
                   minDate={new Date()}
-                  style={{ width: "360px" }}
+                  style={{ width: "360px", backgroundColor: "white" }}
                   onChange={handleDateChange}
                   KeyboardButtonProps={{
                     "aria-label": "change date",
@@ -132,7 +132,7 @@ const EventForm = ({
                   error={!isEmpty(fieldErrors[DATE])}
                   helperText={fieldErrors[DATE]}
                   disabled={disabled}
-                  style={{ width: "360px" }}
+                  style={{ width: "360px", backgroundColor: "white" }}
                   label={TIME}
                   value={date}
                   onChange={handleDateChange}

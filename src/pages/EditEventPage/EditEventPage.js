@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { EVENT_FORM, urls } from "../../constants";
 import EditEvent from "../../components/organisms/EditEvent";
-import { Typography } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 
 const EditEventPage = () => {
   const { LABELS } = EVENT_FORM;
@@ -66,20 +66,22 @@ const EditEventPage = () => {
 
   useEffect(() => {
     // TODO: Remove hardcoded id after routing implementation
-    fetchEventDetails(12);
+    fetchEventDetails(17);
   }, []);
 
   return (
-    <div style={{ padding: 24 }}>
-      <Typography variant="h5" style={{ marginBottom: 16 }}>
-        Edit Whiteboard Event
-      </Typography>
-      {event ? (
-        <EditEvent eventDetails={event} handleOnEdit={handleOnEdit} />
-      ) : (
-        <div>Oops...Something went wrong! Please try again</div>
-      )}
-    </div>
+    <Paper style={{ backgroundColor: "#edf5f6" }}>
+      <div style={{ padding: 24 }}>
+        <Typography variant="h5" style={{ marginBottom: 16 }}>
+          Edit Whiteboard Event
+        </Typography>
+        {event ? (
+          <EditEvent eventDetails={event} handleOnEdit={handleOnEdit} />
+        ) : (
+          <div>Oops...Something went wrong! Please try again</div>
+        )}
+      </div>
+    </Paper>
   );
 };
 

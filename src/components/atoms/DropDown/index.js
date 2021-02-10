@@ -36,8 +36,9 @@ const Dropdown = ({
         variant={variant}
         error={error}
         disabled={disabled}
+        style={{ backgroundColor: "white" }}
       >
-        <InputLabel>{label}</InputLabel>
+        <InputLabel shrink={true}>{label}</InputLabel>
         <Select value={value} onChange={handleChange}>
           {options &&
             options.map((option, index) => (
