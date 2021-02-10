@@ -6,16 +6,17 @@ import { headCells } from "../../constants";
 import EnhancedTable from "../../components/organisms/WhiteBoardTable/EnhancedTable";
 import axios from "axios";
 import { urls, statusContants } from "../../constants";
+import { useHistory } from "react-router-dom";
 
 export default function HomePage(props) {
-  const [activeTab, setActiveTab] = useState("List");
+  const history = useHistory();
+
   const [rows, setRows] = useState([]);
   const [data, setData] = useState({
     status: [],
     start_date: "",
     end_date: "",
   });
-  console.log("tasks", props.tasks);
 
   const fetchAllEvents = () => {
     var status = data.status.length > 0 ? "status=" + data.status : "";
@@ -23,9 +24,7 @@ export default function HomePage(props) {
       data.start_date === "" || data.end_date === ""
         ? ""
         : "start_date=" + data.start_date + "&end_date=" + data.end_date;
-    console.log("status -  dateRange", status + "  -  " + dateRange);
     const url = urls.getAllEvents + frameQueryParams(status, dateRange);
-    console.log("url ", url);
     axios
       .get(url)
       .then((resp) => {
@@ -88,8 +87,12 @@ export default function HomePage(props) {
   }, [data]);
 
   const handleTabChange = (event, value) => {
-    console.log("Tab Value Changed -> ", value);
-    setActiveTab(value);
+    if (value === "List") {
+      history.push("/");
+    }
+    if (value === "Add") {
+      history.push("/create/event/");
+    }
   };
 
   const handleFilterButtonClick = (event, status, startDate, endDate) => {
@@ -97,25 +100,19 @@ export default function HomePage(props) {
   };
 
   return (
-    <div>
-      <TableScreenTemplate
-        header={<TopNavigationBar />}
-        sidebar={<SideNavigationBar handleTabChange={handleTabChange} activeTab={activeTab} />}
-        body={
-          activeTab === "List" ? (
-            <EnhancedTable
-              headCells={headCells}
-              rows={rows}
-              defaultOrderBy="name"
-              defaultOrder="asc"
-              rowsPerPage={5}
-              handleFilterButtonClick={handleFilterButtonClick}
-            />
-          ) : (
-            <div> Add Form </div>
-          )
-        }
-      />
-    </div>
+    <TableScreenTemplate
+      header={<TopNavigationBar />}
+      sidebar={<SideNavigationBar handleTabChange={handleTabChange} />}
+      body={
+        <EnhancedTable
+          headCells={headCells}
+          rows={rows}
+          defaultOrderBy="name"
+          defaultOrder="asc"
+          rowsPerPage={5}
+          handleFilterButtonClick={handleFilterButtonClick}
+        />
+      }
+    />
   );
 }

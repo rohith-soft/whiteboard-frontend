@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import HomePage from "./pages/HomePage/HomePage";
 import axios from "axios";
+import { createBrowserHistory } from "history";
 import { urls } from "./constants";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Event from "./pages/Event";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import EditEvent from "./pages/EditEventPage/EditEventPage";
+import CreateEventPage from "./pages/CreateEventPage/CreateEventPage";
 
 const App = () => {
   const fetchAllTasks = () => {
     const url = urls.getAllTasks;
-    console.log("url ", url);
     axios
       .get(url)
       .then((resp) => {
@@ -29,13 +30,16 @@ const App = () => {
 
   return (
     <div>
-      <Router>
+      <Router history={createBrowserHistory()}>
         <Switch>
-          <Route path="/event/:id">
-            <Event />
+          <Route path="/event/:id" exact>
+            <EditEvent />
           </Route>
-          <Route path="/">
+          <Route path="/" exact>
             <HomePage />
+          </Route>
+          <Route path="/create/event" exact>
+            <CreateEventPage />
           </Route>
         </Switch>
       </Router>
