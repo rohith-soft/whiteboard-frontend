@@ -59,10 +59,9 @@ const EditEventPage = () => {
     } catch (error) {
       console.warn(error);
       // TODO: Show user the error message
+    } finally {
+      window.location.replace("http://localhost:3000/");
     }
-    // finally {
-    //   window.location.replace("http://localhost:3000/");
-    // }
   };
 
   useEffect(() => {
