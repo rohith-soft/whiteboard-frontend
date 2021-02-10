@@ -6,6 +6,12 @@ const useStyles = makeStyles(() => ({
   root: {
     minWidth: 360,
   },
+  inputRoot: {
+    "&$disabled": {
+      color: "#332828",
+    },
+  },
+  disabled: {},
 }));
 const TextField = ({
   label,
@@ -44,6 +50,12 @@ const TextField = ({
       variant={variant}
       InputLabelProps={{
         shrink: shrink,
+      }}
+      InputProps={{
+        classes: {
+          root: classes.inputRoot,
+          disabled: classes.disabled,
+        },
       }}
       style={{ backgroundColor: "white" }}
       type={type}

@@ -11,7 +11,16 @@ import {
 } from "@material-ui/pickers";
 import { EVENT_FORM, STATUS } from "../../../constants";
 import { isEmpty } from "../../../utils/helper";
+import { makeStyles } from "@material-ui/core";
 
+const useStyles = makeStyles(() => ({
+  inputRoot: {
+    "&$disabled": {
+      color: "#332828",
+    },
+  },
+  disabled: {},
+}));
 const EventForm = ({
   editEvent,
   options,
@@ -37,6 +46,8 @@ const EventForm = ({
   disabled,
   handleStatusChange,
 }) => {
+  const classes = useStyles();
+
   const { LABELS } = EVENT_FORM;
   const {
     TASK,
@@ -114,6 +125,12 @@ const EventForm = ({
                   disabled={disabled}
                   id="date-picker-dialog"
                   label={DATE}
+                  InputProps={{
+                    classes: {
+                      root: classes.inputRoot,
+                      disabled: classes.disabled,
+                    },
+                  }}
                   format="MM/dd/yyyy"
                   value={date}
                   minDate={new Date()}
@@ -135,6 +152,12 @@ const EventForm = ({
                   style={{ width: "360px", backgroundColor: "white" }}
                   label={TIME}
                   value={date}
+                  InputProps={{
+                    classes: {
+                      root: classes.inputRoot,
+                      disabled: classes.disabled,
+                    },
+                  }}
                   onChange={handleDateChange}
                   KeyboardButtonProps={{
                     "aria-label": "change time",
