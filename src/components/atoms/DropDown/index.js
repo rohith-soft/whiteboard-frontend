@@ -21,6 +21,7 @@ const Dropdown = ({
   variant,
   error,
   helperText,
+  disabled,
 }) => {
   const classes = useStyles();
 
@@ -34,6 +35,7 @@ const Dropdown = ({
         className={classes.formControl}
         variant={variant}
         error={error}
+        disabled={disabled}
       >
         <InputLabel>{label}</InputLabel>
         <Select value={value} onChange={handleChange}>

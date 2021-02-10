@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { EVENT_FORM, TASK_LIST } from "../../../constants";
+import { ERROR_MESSAGES, EVENT_FORM, TASK_LIST } from "../../../constants";
 import EventForm from "../../molecules/EventForm";
 import Button from "../../atoms/Button";
 import { Typography } from "@material-ui/core";
+import {
+  isEmpty,
+  isPhoneNumberValid,
+  isStateValid,
+} from "../../../utils/helper";
 
 const EditEvent = ({ eventDetails, handleOnEdit }) => {
   const { LABELS } = EVENT_FORM;
@@ -22,6 +27,8 @@ const EditEvent = ({ eventDetails, handleOnEdit }) => {
     WHITEBOARD_ID,
     STATUS: STATUS_LABEL,
     EXISTING_NOTES,
+    TASK,
+    DATE,
   } = LABELS;
 
   const [formValues, setFormValues] = useState({
@@ -42,11 +49,29 @@ const EditEvent = ({ eventDetails, handleOnEdit }) => {
   });
   const [task, setTask] = useState(eventDetails?.taskId);
   const [date, setDate] = useState(new Date(eventDetails?.scheduled));
+  const [fieldErrors, setFieldErrors] = useState({
+    [DESCRIPTION]: "",
+    [DURATION]: "",
+    [ADDRESS]: "",
+    [CITY]: "",
+    [STATE]: "",
+    [CONTACT_NAME]: "",
+    [CONTACT_PHONE]: "",
+    [LATITUDE]: "",
+    [LONGITUDE]: "",
+    [TASK]: "",
+    [DATE]: "",
+    [STATUS_LABEL]: "",
+  });
 
   const handleFieldChange = (fieldName, value) => {
     setFormValues((prevState) => ({
       ...prevState,
       [fieldName]: value,
+    }));
+    setFieldErrors((prevState) => ({
+      ...prevState,
+      [fieldName]: "",
     }));
   };
 
@@ -74,6 +99,74 @@ const EditEvent = ({ eventDetails, handleOnEdit }) => {
     }));
   };
 
+  const isDisabled = () => {
+    return (
+      formValues[STATUS_LABEL] === "COMPLETE" ||
+      formValues[STATUS_LABEL] === "FAILED" ||
+      formValues[STATUS_LABEL] === "COMPLETED"
+    );
+  };
+
+  const validateAndEdit = () => {
+    let isValid = true;
+    if (isEmpty(task)) {
+      isValid = false;
+      setFieldErrors((prevState) => ({
+        ...prevState,
+        [TASK]: ERROR_MESSAGES.EMPTY_FIELD,
+      }));
+    }
+    if (isEmpty(date)) {
+      isValid = false;
+      setFieldErrors((prevState) => ({
+        ...prevState,
+        [DATE]: ERROR_MESSAGES.EMPTY_FIELD,
+      }));
+    }
+    const fields = [
+      DESCRIPTION,
+      DURATION,
+      ADDRESS,
+      CITY,
+      LATITUDE,
+      LONGITUDE,
+      STATE,
+      CONTACT_NAME,
+      CONTACT_PHONE,
+      STATUS_LABEL,
+    ];
+    fields.forEach((field) => {
+      if (isEmpty(formValues[field])) {
+        isValid = false;
+        setFieldErrors((prevState) => ({
+          ...prevState,
+          [field]: ERROR_MESSAGES.EMPTY_FIELD,
+        }));
+      } else {
+        setFieldErrors((prevState) => ({
+          ...prevState,
+          [field]: "",
+        }));
+      }
+    });
+    if (!isPhoneNumberValid(formValues[CONTACT_PHONE])) {
+      isValid = false;
+      setFieldErrors((prevState) => ({
+        ...prevState,
+        [CONTACT_PHONE]: ERROR_MESSAGES.PHONE_DIGITS,
+      }));
+    }
+    if (!isStateValid(formValues[STATE])) {
+      isValid = false;
+      setFieldErrors((prevState) => ({
+        ...prevState,
+        [STATE]: ERROR_MESSAGES.STATE_DIGITS,
+      }));
+    }
+    if (isValid) {
+      handleOnEdit(formValues, date, task);
+    }
+  };
   return (
     <>
       <Typography variant="subtitle2" style={{ marginBottom: 16 }}>
@@ -91,7 +184,9 @@ const EditEvent = ({ eventDetails, handleOnEdit }) => {
         contactName={formValues[CONTACT_NAME]}
         contactPhone={formValues[CONTACT_PHONE]}
         note={formValues[NOTE]}
+        fieldErrors={fieldErrors}
         task={task}
+        disabled={isDisabled}
         latitude={formValues[LATITUDE]}
         longitude={formValues[LONGITUDE]}
         status={formValues[STATUS_LABEL]}
@@ -107,9 +202,10 @@ const EditEvent = ({ eventDetails, handleOnEdit }) => {
         <Button
           label={EDIT_BUTTON}
           color="primary"
+          disabled={isDisabled}
           variant="contained"
           size="medium"
-          onClick={() => handleOnEdit(formValues, date, task)}
+          onClick={validateAndEdit}
         />
       </div>
     </>

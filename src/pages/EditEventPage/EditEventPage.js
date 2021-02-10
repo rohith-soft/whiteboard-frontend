@@ -53,7 +53,16 @@ const EditEventPage = () => {
       clli: formValues[CLLI],
       site_type: formValues[SITE_TYPE],
     };
-    axios.put(`${urls.eventBase}/${formValues[WHITEBOARD_ID]}`, payload);
+    console.log(payload);
+    try {
+      axios.put(`${urls.eventBase}/${formValues[WHITEBOARD_ID]}`, payload);
+    } catch (error) {
+      console.warn(error);
+      // TODO: Show user the error message
+    }
+    // finally {
+    //   window.location.replace("http://localhost:3000/");
+    // }
   };
 
   useEffect(() => {

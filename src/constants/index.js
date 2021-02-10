@@ -61,8 +61,8 @@ export const STATUS = [
     value: "IN_PROGRESS",
   },
   {
-    name: "Completed",
-    value: "COMPLETED",
+    name: "Complete",
+    value: "COMPLETE",
   },
   {
     name: "Failed",
