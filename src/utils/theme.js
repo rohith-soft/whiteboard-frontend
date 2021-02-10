@@ -62,7 +62,7 @@ const theme = createMuiTheme({
       letterSpacing: "normal",
     },
     caption: {
-      fontSize: "20px !important",
+      fontSize: "14px !important",
       color: "#949494",
       fontWeight: "normal",
       fontStretch: "normal",

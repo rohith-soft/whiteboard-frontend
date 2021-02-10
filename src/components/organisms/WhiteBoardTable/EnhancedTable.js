@@ -143,8 +143,8 @@ export default function EnhancedTable(props) {
   };
   const history = useHistory();
 
-  const handleClick = (event) => {
-    history.push("/event/" + 10);
+  const handleClick = (id) => {
+    history.push("/event/" + id);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -156,23 +156,36 @@ export default function EnhancedTable(props) {
     setPage(0);
   };
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
       <Grid container spacing={4}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+            <Typography
+              className={classes.title}
+              variant="h6"
+              id="tableTitle"
+              component="div"
+            >
               Filter Parameters
             </Typography>
-            <EnhancedTableToolbar handleFilterButtonClick={props.handleFilterButtonClick} />
+            <EnhancedTableToolbar
+              handleFilterButtonClick={props.handleFilterButtonClick}
+            />
           </Paper>
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <TableContainer>
-              <Table className={classes.table} aria-labelledby="tableTitle" size="small" aria-label="enhanced table">
+              <Table
+                className={classes.table}
+                aria-labelledby="tableTitle"
+                size="small"
+                aria-label="enhanced table"
+              >
                 <EnhancedTableHead
                   classes={classes}
                   order={order}
@@ -190,17 +203,24 @@ export default function EnhancedTable(props) {
                       return (
                         <StyledTableRow
                           hover
-                          onClick={(event) => handleClick(event, row.name)}
+                          onClick={(event) => handleClick(row.id)}
                           role="checkbox"
                           tabIndex={-1}
                           key={row.name}
                         >
-                          <StyledTableCell component="th" id={labelId} scope="row" padding="checkbox">
+                          <StyledTableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="checkbox"
+                          >
                             {row.id}
                           </StyledTableCell>
                           <StyledTableCell>{row.status}</StyledTableCell>
                           <StyledTableCell>{row.task_id}</StyledTableCell>
-                          <StyledTableCell>{row.location_address}</StyledTableCell>
+                          <StyledTableCell>
+                            {row.location_address}
+                          </StyledTableCell>
                           <StyledTableCell>{row.scheduled}</StyledTableCell>
                           <StyledTableCell>{row.contact_name}</StyledTableCell>
                           <StyledTableCell>{row.description}</StyledTableCell>
@@ -216,7 +236,12 @@ export default function EnhancedTable(props) {
                 <TableFooter>
                   <TableRow>
                     <TablePagination
-                      rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                      rowsPerPageOptions={[
+                        5,
+                        10,
+                        25,
+                        { label: "All", value: -1 },
+                      ]}
                       colSpan={3}
                       count={rows.length}
                       rowsPerPage={rowsPerPage}

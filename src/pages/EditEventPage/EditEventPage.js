@@ -3,8 +3,15 @@ import React, { useEffect, useState } from "react";
 import { EVENT_FORM, urls } from "../../constants";
 import EditEvent from "../../components/organisms/EditEvent";
 import { Paper, Typography } from "@material-ui/core";
+import { useParams } from "react-router-dom";
+import SideNavigationBar from "../../components/organisms/SideNavigationBar/SideNavigationBar";
+import TopNavigationBar from "../../components/organisms/TopNavigationBar/TopNavigationBar";
+import TableScreenTemplate from "../../components/templates/TableScreenTemplate/TableScreenTemplate";
+import { useHistory } from "react-router-dom";
 
 const EditEventPage = () => {
+  const history = useHistory();
+  const { id } = useParams();
   const { LABELS } = EVENT_FORM;
   const {
     DESCRIPTION,
@@ -53,35 +60,48 @@ const EditEventPage = () => {
       clli: formValues[CLLI],
       site_type: formValues[SITE_TYPE],
     };
-    console.log(payload);
     try {
       axios.put(`${urls.eventBase}/${formValues[WHITEBOARD_ID]}`, payload);
     } catch (error) {
       console.warn(error);
       // TODO: Show user the error message
     } finally {
-      window.location.replace("http://localhost:3000/");
+      history.push("/");
+    }
+  };
+
+  const handleTabChange = (event, value) => {
+    if (value === "List") {
+      history.push("/");
+    }
+    if (value === "Add") {
+      history.push("/create/event/");
     }
   };
 
   useEffect(() => {
-    // TODO: Remove hardcoded id after routing implementation
-    fetchEventDetails(17);
+    fetchEventDetails(id);
   }, []);
 
   return (
-    <Paper style={{ backgroundColor: "#edf5f6" }}>
-      <div style={{ padding: 24 }}>
-        <Typography variant="h5" style={{ marginBottom: 16 }}>
-          Edit Whiteboard Event
-        </Typography>
-        {event ? (
-          <EditEvent eventDetails={event} handleOnEdit={handleOnEdit} />
-        ) : (
-          <div>Oops...Something went wrong! Please try again</div>
-        )}
-      </div>
-    </Paper>
+    <TableScreenTemplate
+      header={<TopNavigationBar />}
+      sidebar={<SideNavigationBar handleTabChange={handleTabChange} />}
+      body={
+        <Paper style={{ backgroundColor: "#edf5f6" }}>
+          <div style={{ padding: 24 }}>
+            <Typography variant="h5" style={{ marginBottom: 16 }}>
+              Edit Whiteboard Event
+            </Typography>
+            {event ? (
+              <EditEvent eventDetails={event} handleOnEdit={handleOnEdit} />
+            ) : (
+              <div>Oops...Something went wrong! Please try again</div>
+            )}
+          </div>
+        </Paper>
+      }
+    />
   );
 };
 
