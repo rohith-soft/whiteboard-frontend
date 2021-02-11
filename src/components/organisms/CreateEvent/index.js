@@ -41,7 +41,7 @@ const CreateEvent = ({ handleOnCreate }) => {
     [LONGITUDE]: "",
   });
   const [task, setTask] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date().getTime() + 30 * 60000);
   const [fieldErrors, setFieldErrors] = useState({
     [ADDRESS]: "",
     [CITY]: "",
