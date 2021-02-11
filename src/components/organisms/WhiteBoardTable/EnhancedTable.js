@@ -163,7 +163,10 @@ export default function EnhancedTable(props) {
     <div className={classes.root}>
       <Grid container spacing={4}>
         <Grid item xs={12}>
-          <Paper className={classes.paper}>
+          <Paper
+            className={classes.paper}
+            style={{ backgroundColor: "#edf5f6" }}
+          >
             <Typography
               className={classes.title}
               variant="h6"
@@ -203,6 +206,7 @@ export default function EnhancedTable(props) {
                       return (
                         <StyledTableRow
                           hover
+                          style={{ cursor: "pointer" }}
                           onClick={(event) => handleClick(row.id)}
                           role="checkbox"
                           tabIndex={-1}
