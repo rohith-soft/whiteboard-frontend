@@ -50,7 +50,6 @@ const EditEvent = ({ eventDetails, handleOnEdit }) => {
   const [task, setTask] = useState(eventDetails?.task_id);
   const [date, setDate] = useState(new Date(eventDetails?.scheduled));
   const [fieldErrors, setFieldErrors] = useState({
-    [DESCRIPTION]: "",
     [DURATION]: "",
     [ADDRESS]: "",
     [CITY]: "",
@@ -90,6 +89,10 @@ const EditEvent = ({ eventDetails, handleOnEdit }) => {
 
   const handleTaskChange = (value) => {
     setTask(value);
+    setFieldErrors((prevState) => ({
+      ...prevState,
+      [TASK]: "",
+    }));
   };
 
   const handleStatusChange = (value) => {
@@ -116,7 +119,6 @@ const EditEvent = ({ eventDetails, handleOnEdit }) => {
       }));
     }
     const fields = [
-      DESCRIPTION,
       DURATION,
       ADDRESS,
       CITY,

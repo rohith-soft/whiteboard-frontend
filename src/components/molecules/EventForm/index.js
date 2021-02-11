@@ -104,8 +104,8 @@ const EventForm = ({
             disabled={disabled}
             name={DESCRIPTION}
             value={description}
-            error={!isEmpty(fieldErrors[DESCRIPTION])}
-            helperText={fieldErrors[DESCRIPTION]}
+            // error={!isEmpty(fieldErrors[DESCRIPTION])}
+            // helperText={fieldErrors[DESCRIPTION]}
             shrink
             handleTextChange={handleFieldChange}
             multiline
