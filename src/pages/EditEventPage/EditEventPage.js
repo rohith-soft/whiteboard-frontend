@@ -77,6 +77,9 @@ const EditEventPage = () => {
     if (value === "Add") {
       history.push("/create/event/");
     }
+    if (value === "Calendar") {
+      history.push("/calendar");
+    }
   };
 
   useEffect(() => {

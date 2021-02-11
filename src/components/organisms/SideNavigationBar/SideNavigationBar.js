@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import SideBarIcons from "../../atoms/SideBarIcons/SideBarIcons";
 import AddIcon from "@material-ui/icons/Add";
 import ViewListIcon from "@material-ui/icons/ViewList";
+import CalendarIcon from '@material-ui/icons/CalendarTodayRounded';
 import IconButton from "@material-ui/core/IconButton";
 import { Typography, makeStyles } from "@material-ui/core";
 
@@ -61,6 +62,14 @@ const SideNavigationBar = (props) => {
                 onClick={(e) => props.handleTabChange(e, "Add")}
               >
                 <SideBarIcons icon={<AddIcon />} />
+              </IconButton>
+            </Grid>
+            <Grid item className={classes.root}>
+              <IconButton
+                className={ classes.root}
+                onClick={(e) => props.handleTabChange(e, "Calendar")}
+              >
+                <SideBarIcons icon={<CalendarIcon />} />
               </IconButton>
             </Grid>
           </Grid>
