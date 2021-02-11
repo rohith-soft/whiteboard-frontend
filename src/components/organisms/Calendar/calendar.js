@@ -127,10 +127,8 @@ export default function CalendarDemo() {
         data.length > 0 ? data[data.length - 1].id + 1 : 0;
       data = [...data, { id: startingAddedId, ...added }];
     }
-    if (changed) {   
-      data = data.map(appointment => (
-        history.push("/event/" + appointment.id)));
-  }
+    if (changed) {
+      history.push("/event/id");
     }
     if (deleted !== undefined) {
       data = data.filter((appointment) => appointment.id !== deleted);
