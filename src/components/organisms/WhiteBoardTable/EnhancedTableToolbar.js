@@ -127,10 +127,14 @@ export default function EnhancedTableToolbar(props) {
             />
           </Grid>
         </MuiPickersUtilsProvider>
-        <Grid item xs={3} style={{ marginTop: 15 }}>
+        <Grid item xs={2} style={{ marginTop: 15 }}>
           <Button variant="contained" color="primary" onClick={handleClickFilter}>
             Filter
           </Button>
+        </Grid>
+        <Grid item xs={4}>
+          <TextField id="standard-basic" label="Filter By Event Id" onChange={props.handleFilterById} />
+          
         </Grid>
       </Grid>
     </Toolbar>
