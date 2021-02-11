@@ -93,6 +93,9 @@ export default function HomePage(props) {
     if (value === "Add") {
       history.push("/create/event/");
     }
+    if (value === "Calendar") {
+      history.push("/calendar");
+    }
   };
 
   const handleFilterButtonClick = (event, status, startDate, endDate) => {

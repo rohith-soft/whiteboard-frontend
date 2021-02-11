@@ -21,10 +21,13 @@ import {
 
 import { urls } from "../../../constants/index";
 import { useHistory } from "react-router-dom";
-
+import SideNavigationBar from "../SideNavigationBar/SideNavigationBar";
+import TopNavigationBar from "../TopNavigationBar/TopNavigationBar";
+import TableScreenTemplate from "../../templates/TableScreenTemplate/TableScreenTemplate";
 import {
   pink, purple, teal, amber, deepOrange,red,green
 } from '@material-ui/core/colors';
+
 const resources = [
   {
     id:1,
@@ -58,26 +61,30 @@ const resources = [
 export default function CalendarDemo() {
     const [data,setData]=useState([])
     const history = useHistory();
-    const fetchAllEvents = () => {
-        const url = urls.getAllEvents;
-        axios
-          .get(url)
-          .then((resp) => {
-            if (resp.status == 200) {
-              setData(resp.data)
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+    const handleTabChange = (event, value) => {
+        if (value === "List") {
+            history.push("/");
+          }
+          if (value === "Add") {
+            history.push("/create/event/");
+          }
+          if (value === "Calendar") {
+            history.push("/calendar");
+          }
+      };
+    const fetchAllEvents = async () => {
+        try {
+          const response = await axios.get(`${urls.getAllEvents}`);
+          setData(response.data);
+        } catch {
+          console.log("error");
+        }
       };
     
       useEffect(() => {
         fetchAllEvents();
-        console.log(data)
       }, []);
       {data && data.map(option=>(
-        console.log(option), 
         option.title="Id:"+option.id +" ("+option.status+")",
         option.stDate=new Date(option.scheduled),
         option.startDate=new Date(option.stDate.getFullYear(),option.stDate.getMonth(),option.stDate.getDate(),option.stDate.getUTCHours(),option.stDate.getUTCMinutes()),
@@ -100,6 +107,10 @@ export default function CalendarDemo() {
       }
       
     return (
+        <TableScreenTemplate
+      header={<TopNavigationBar />}
+      sidebar={<SideNavigationBar handleTabChange={handleTabChange} />}
+      body={
       <Paper>
         <Scheduler
           data={data}
@@ -139,5 +150,7 @@ export default function CalendarDemo() {
           />
         </Scheduler>
     </Paper>
+    }
+    />
     );
 }
