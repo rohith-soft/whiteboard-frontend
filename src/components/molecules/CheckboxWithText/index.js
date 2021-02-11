@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
-import CloseIcon from "@material-ui/icons/Close";
 import { iconFill, currentlyReadBorder } from "../../../utils/colorPallete";
-import SearchResult from "../../organisms/SearchResult/SearchResult";
+
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 
@@ -43,5 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchBar(props) {
   const classes = useStyles();
-  return <div>{props.checked ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}</div>;
+  return (
+    <div>{props.checked ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}</div>
+  );
 }
