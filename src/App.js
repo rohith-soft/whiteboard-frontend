@@ -6,6 +6,7 @@ import { urls } from "./constants";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import EditEvent from "./pages/EditEventPage/EditEventPage";
 import CreateEventPage from "./pages/CreateEventPage/CreateEventPage";
+import CalendarDemo from "./components/organisms/Calendar/calendar"
 
 const App = () => {
   const fetchAllTasks = () => {
@@ -40,6 +41,9 @@ const App = () => {
           </Route>
           <Route path="/create/event" exact>
             <CreateEventPage />
+          </Route>
+          <Route path="/calendar" exact>
+            <CalendarDemo />
           </Route>
         </Switch>
       </Router>
