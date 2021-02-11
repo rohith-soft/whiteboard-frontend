@@ -37,7 +37,7 @@ export default function HomePage(props) {
               var status = whiteBoardEvent["status"];
               whiteBoardEvent["status"] = statusContants[status];
               var dateTime = whiteBoardEvent["scheduled"];
-              whiteBoardEvent["scheduled"] = moment(dateTime).format("L") + " " + moment(dateTime).format("LT");
+              whiteBoardEvent["scheduled"] = `${moment(dateTime).format("L")} ${moment(dateTime).format("LT")}`;
             });
           }
           setRows(resp.data);
@@ -102,13 +102,11 @@ export default function HomePage(props) {
     setData({ status: status, start_date: startDate, end_date: endDate });
   };
   const handleFilterById = (event) => {
-    console.log(event.target.value);
-    console.log("event.target.value  rows " + rows);
     var eventId = event.target.value;
     if (eventId === "") {
       fetchAllEvents();
     } else {
-      setRows(rows.filter((eachEvent) => (eachEvent.id+"").includes(eventId+"")));
+      setRows(rows.filter((eachEvent) => (eachEvent.id + "").includes(eventId + "")));
     }
   };
   return (
