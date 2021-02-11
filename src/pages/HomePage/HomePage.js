@@ -7,6 +7,7 @@ import EnhancedTable from "../../components/organisms/WhiteBoardTable/EnhancedTa
 import axios from "axios";
 import { urls, statusContants } from "../../constants";
 import { useHistory } from "react-router-dom";
+import * as moment from "moment";
 
 export default function HomePage(props) {
   const history = useHistory();
@@ -35,6 +36,8 @@ export default function HomePage(props) {
               whiteBoardEvent["task_id"] = window.localStorage.getItem(taskId);
               var status = whiteBoardEvent["status"];
               whiteBoardEvent["status"] = statusContants[status];
+              var dateTime = whiteBoardEvent["scheduled"];
+              whiteBoardEvent["scheduled"] = moment(dateTime).format("L")+" "+moment(dateTime).format("LT");
             });
           }
           setRows(resp.data);
