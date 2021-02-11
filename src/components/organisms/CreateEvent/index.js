@@ -41,10 +41,8 @@ const CreateEvent = ({ handleOnCreate }) => {
     [LONGITUDE]: "",
   });
   const [task, setTask] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date().getTime() + 30 * 60000);
   const [fieldErrors, setFieldErrors] = useState({
-    [DESCRIPTION]: "",
-    [DURATION]: "",
     [ADDRESS]: "",
     [CITY]: "",
     [STATE]: "",
@@ -82,6 +80,10 @@ const CreateEvent = ({ handleOnCreate }) => {
 
   const handleSelectChange = (value) => {
     setTask(value);
+    setFieldErrors((prevState) => ({
+      ...prevState,
+      [TASK]: "",
+    }));
   };
 
   const validateAndCreate = () => {
@@ -101,7 +103,6 @@ const CreateEvent = ({ handleOnCreate }) => {
       }));
     }
     const fields = [
-      DESCRIPTION,
       DURATION,
       ADDRESS,
       CITY,
