@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
-import { ViewState, EditingState, IntegratedEditing } from "@devexpress/dx-react-scheduler";
+import {
+  ViewState,
+  EditingState,
+  IntegratedEditing,
+} from "@devexpress/dx-react-scheduler";
 
 import {
   Scheduler,
@@ -22,7 +26,15 @@ import { useHistory } from "react-router-dom";
 import SideNavigationBar from "../SideNavigationBar/SideNavigationBar";
 import TopNavigationBar from "../TopNavigationBar/TopNavigationBar";
 import TableScreenTemplate from "../../templates/TableScreenTemplate/TableScreenTemplate";
-import { pink, purple, teal, amber, deepOrange, red, green } from "@material-ui/core/colors";
+import {
+  pink,
+  purple,
+  teal,
+  amber,
+  deepOrange,
+  red,
+  green,
+} from "@material-ui/core/colors";
 import { fetchAllEventsApi } from "../../../services/Event";
 
 const resources = [
@@ -32,27 +44,27 @@ const resources = [
     title: "Status",
     instances: [
       {
-        id: "IN_PROGRESS",
+        id: "In Progress",
         color: green,
       },
       {
-        id: "COMPLETE",
+        id: "Complete",
         color: teal,
       },
       {
-        id: "ACTIVE",
+        id: "Active",
         color: purple,
       },
       {
-        id: "STAGED",
+        id: "Staged",
         color: deepOrange,
       },
       {
-        id: "FAILED",
+        id: "Failed",
         color: red,
       },
       {
-        id: "CANCELLED",
+        id: "Cancelled",
         color: amber,
       },
     ],
@@ -106,7 +118,8 @@ export default function CalendarDemo() {
   }
   const handleCommitChanges = ({ added, changed, deleted }) => {
     if (added) {
-      const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
+      const startingAddedId =
+        data.length > 0 ? data[data.length - 1].id + 1 : 0;
       data = [...data, { id: startingAddedId, ...added }];
     }
     if (changed) {
@@ -125,7 +138,10 @@ export default function CalendarDemo() {
       body={
         <Paper>
           <Scheduler data={data}>
-            <ViewState defaultCurrentDate={"2021-02-11"} defaultCurrentViewName="Week" />
+            <ViewState
+              defaultCurrentDate={"2021-02-11"}
+              defaultCurrentViewName="Week"
+            />
             <EditingState onCommitChanges={handleCommitChanges} />
             <IntegratedEditing />
 
