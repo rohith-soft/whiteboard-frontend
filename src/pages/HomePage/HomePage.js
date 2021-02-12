@@ -5,7 +5,7 @@ import SideNavigationBar from "../../components/organisms/SideNavigationBar/Side
 import { headCells } from "../../constants";
 import EnhancedTable from "../../components/organisms/WhiteBoardTable/EnhancedTable";
 import { useHistory } from "react-router-dom";
-import { fetchAllEvents } from "../../services/Event";
+import { fetchAllEventsApi } from "../../services/Event";
 
 export default function HomePage() {
   const history = useHistory();
@@ -37,24 +37,21 @@ export default function HomePage() {
     }
   }
 
-  const tempFunc = async () => {
-    console.log("HP rows1 ");
-    var rows = await fetchAllEvents(frameQueryParams());
-    setRows(rows);
-    console.log("HP rows2 " + rows);
-  };
-  
   useEffect(() => {
-    // console.log("HP rows1 ");
-    // var rows = await fetchAllEvents(frameQueryParams());
-    // setRows(rows);
-    // console.log("HP rows2 " + rows);
-    tempFunc();
+    async function fetchData() {
+      const rows = await fetchAllEventsApi(frameQueryParams());
+      setRows(rows);
+    }
+    fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   fetchAllEvents(frameQueryParams());
-  // }, [data]);
+  useEffect(() => {
+    async function fetchData() {
+      const rows = await fetchAllEventsApi(frameQueryParams());
+      setRows(rows);
+    }
+    fetchData();
+  }, [data]);
 
   const handleTabChange = (event, value) => {
     if (value === "List") {
@@ -74,7 +71,11 @@ export default function HomePage() {
   const handleFilterById = (event) => {
     var eventId = event.target.value;
     if (eventId === "") {
-      fetchAllEvents();
+      async function fetchData() {
+        const rows = await fetchAllEventsApi(frameQueryParams());
+        setRows(rows);
+      }
+      fetchData();
     } else {
       setRows(rows.filter((eachEvent) => (eachEvent.id + "").includes(eventId + "")));
     }

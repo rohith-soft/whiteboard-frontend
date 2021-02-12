@@ -1,12 +1,12 @@
 import { Paper, Typography } from "@material-ui/core";
-import axios from "axios";
 import React from "react";
 import CreateEvent from "../../components/organisms/CreateEvent";
 import SideNavigationBar from "../../components/organisms/SideNavigationBar/SideNavigationBar";
 import TopNavigationBar from "../../components/organisms/TopNavigationBar/TopNavigationBar";
 import TableScreenTemplate from "../../components/templates/TableScreenTemplate/TableScreenTemplate";
-import { EVENT_FORM, urls } from "../../constants";
+import { EVENT_FORM } from "../../constants";
 import { useHistory } from "react-router-dom";
+import { createEventApi } from "../../services/Event";
 
 const CreateEventPage = () => {
   const history = useHistory();
@@ -44,13 +44,8 @@ const CreateEventPage = () => {
       clli: formValues[CLLI],
       site_type: formValues[SITE_TYPE],
     };
-    try {
-      axios.post(urls.eventBase, payload);
-    } catch {
-      // TODO: Add a modal or something to notify user regarding the issue here
-    } finally {
-      history.push("/");
-    }
+    createEventApi(payload);
+    window.location.replace("/");
   };
 
   const handleTabChange = (event, value) => {
