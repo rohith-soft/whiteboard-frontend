@@ -32,7 +32,7 @@ const EditEventPage = () => {
 
   const [event, setEvent] = useState(null);
 
-  const handleOnEdit = (formValues, date, task) => {
+  const handleOnEdit = async (formValues, date, task) => {
     const isoDate = new Date(date).toISOString();
     const payload = {
       task_id: task,
@@ -51,7 +51,7 @@ const EditEventPage = () => {
       clli: formValues[CLLI],
       site_type: formValues[SITE_TYPE],
     };
-    updateEventApi(formValues[WHITEBOARD_ID], payload);
+    await updateEventApi(formValues[WHITEBOARD_ID], payload);
     window.location.replace("/");
   };
 

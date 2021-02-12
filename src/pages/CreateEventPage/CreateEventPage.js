@@ -26,7 +26,7 @@ const CreateEventPage = () => {
     LONGITUDE,
   } = LABELS;
 
-  const handleOnCreate = (formValues, date, task) => {
+  const handleOnCreate = async (formValues, date, task) => {
     const isoDate = new Date(date).toISOString();
     const payload = {
       task_id: task,
@@ -44,7 +44,7 @@ const CreateEventPage = () => {
       clli: formValues[CLLI],
       site_type: formValues[SITE_TYPE],
     };
-    createEventApi(payload);
+    await createEventApi(payload);
     window.location.replace("/");
   };
 
