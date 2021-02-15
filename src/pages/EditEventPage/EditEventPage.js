@@ -1,6 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { EVENT_FORM, urls } from "../../constants";
+import { EVENT_FORM } from "../../constants";
 import EditEvent from "../../components/organisms/EditEvent";
 import { Paper, Typography } from "@material-ui/core";
 import { useParams } from "react-router-dom";
@@ -8,6 +7,7 @@ import SideNavigationBar from "../../components/organisms/SideNavigationBar/Side
 import TopNavigationBar from "../../components/organisms/TopNavigationBar/TopNavigationBar";
 import TableScreenTemplate from "../../components/templates/TableScreenTemplate/TableScreenTemplate";
 import { useHistory } from "react-router-dom";
+import { updateEventApi, fetchEventDetails } from "../../services/Event";
 
 const EditEventPage = () => {
   const history = useHistory();
@@ -32,16 +32,7 @@ const EditEventPage = () => {
 
   const [event, setEvent] = useState(null);
 
-  const fetchEventDetails = async (id) => {
-    try {
-      const response = await axios.get(`${urls.eventBase}/${id}`);
-      setEvent(response.data);
-    } catch {
-      console.log("error");
-    }
-  };
-
-  const handleOnEdit = (formValues, date, task) => {
+  const handleOnEdit = async (formValues, date, task) => {
     const isoDate = new Date(date).toISOString();
     const payload = {
       task_id: task,
@@ -60,14 +51,8 @@ const EditEventPage = () => {
       clli: formValues[CLLI],
       site_type: formValues[SITE_TYPE],
     };
-    try {
-      axios.put(`${urls.eventBase}/${formValues[WHITEBOARD_ID]}`, payload);
-    } catch (error) {
-      console.warn(error);
-      // TODO: Show user the error message
-    } finally {
-      history.push("/");
-    }
+    await updateEventApi(formValues[WHITEBOARD_ID], payload);
+    window.location.replace("/");
   };
 
   const handleTabChange = (event, value) => {
@@ -83,7 +68,11 @@ const EditEventPage = () => {
   };
 
   useEffect(() => {
-    fetchEventDetails(id);
+    async function fetchData() {
+      const resp = await fetchEventDetails(id);
+      setEvent(resp);
+    }
+    fetchData();
   }, []);
 
   return (

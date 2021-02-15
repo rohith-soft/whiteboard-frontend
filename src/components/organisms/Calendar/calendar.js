@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Paper from "@material-ui/core/Paper";
 import {
   ViewState,
@@ -23,7 +22,6 @@ import {
   ConfirmationDialog,
 } from "@devexpress/dx-react-scheduler-material-ui";
 
-import { urls } from "../../../constants/index";
 import { useHistory } from "react-router-dom";
 import SideNavigationBar from "../SideNavigationBar/SideNavigationBar";
 import TopNavigationBar from "../TopNavigationBar/TopNavigationBar";
@@ -37,6 +35,7 @@ import {
   red,
   green,
 } from "@material-ui/core/colors";
+import { fetchAllEventsApi } from "../../../services/Event";
 
 const resources = [
   {
@@ -45,27 +44,27 @@ const resources = [
     title: "Status",
     instances: [
       {
-        id: "IN_PROGRESS",
+        id: "In Progress",
         color: green,
       },
       {
-        id: "COMPLETE",
+        id: "Complete",
         color: teal,
       },
       {
-        id: "ACTIVE",
+        id: "Active",
         color: purple,
       },
       {
-        id: "STAGED",
+        id: "Staged",
         color: deepOrange,
       },
       {
-        id: "FAILED",
+        id: "Failed",
         color: red,
       },
       {
-        id: "CANCELLED",
+        id: "Cancelled",
         color: amber,
       },
     ],
@@ -86,17 +85,13 @@ export default function CalendarDemo() {
       history.push("/calendar");
     }
   };
-  const fetchAllEvents = async () => {
-    try {
-      const response = await axios.get(`${urls.getAllEvents}`);
-      setData(response.data);
-    } catch {
-      console.log("error");
-    }
-  };
 
   useEffect(() => {
-    fetchAllEvents();
+    async function fetchData() {
+      const responseData = await fetchAllEventsApi("");
+      setData(responseData);
+    }
+    fetchData();
   }, []);
   {
     data &&
