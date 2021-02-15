@@ -138,10 +138,7 @@ export default function CalendarDemo() {
       body={
         <Paper>
           <Scheduler data={data}>
-            <ViewState
-              defaultCurrentDate={"2021-02-11"}
-              defaultCurrentViewName="Week"
-            />
+            <ViewState defaultCurrentViewName="Week" />
             <EditingState onCommitChanges={handleCommitChanges} />
             <IntegratedEditing />
 
